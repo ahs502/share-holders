@@ -1,0 +1,1 @@
+{"name":"Share Holders","short_name":"Share Holders","description":"A simple share holders preservation application that syncs with Dropbox.","start_url":"/share-holders/","display":"standalone","background_color":"#ffffff","theme_color":"#feffbc","lang":"en","scope":"/share-holders/","icons":[{"src":"coins-512x512.png","sizes":"512x512","type":"image/png"}]}

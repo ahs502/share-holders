@@ -1,6 +1,6 @@
 export interface Data {
   readonly totalInvestment: number;
-  readonly currentValue: number;
+  readonly currentValuation: number;
   readonly shareHolders: ShareHolder[];
 }
 

@@ -2,6 +2,7 @@
 
 import { Dropbox, DropboxAuth } from "dropbox";
 import { useEffect, useState } from "react";
+import { defaultData } from "./constants";
 import type { Data } from "./types";
 
 const CLIENT_ID = "q92uu9htksk0v04";
@@ -41,10 +42,7 @@ export function useDropbox() {
         REDIRECT_URI,
         undefined,
         "token",
-        "legacy",
-        undefined,
-        undefined,
-        true
+        "legacy"
       );
 
       window.location.href = authUrl as string;
@@ -56,9 +54,7 @@ export function useDropbox() {
       window.location.reload();
     },
 
-    isSignedIn(): boolean {
-      return !!dropbox;
-    },
+    isSignedIn: !!dropbox,
 
     async loadData(): Promise<Data> {
       if (!dropbox) throw new Error("Sign-in first");
@@ -71,7 +67,7 @@ export function useDropbox() {
       } catch (error: any) {
         if (error.status === 409) {
           // File doesn't exist, return default value:
-          return { totalInvestment: 0, currentValue: 0, shareHolders: [] };
+          return defaultData;
         }
         throw error;
       }

@@ -201,13 +201,15 @@ export function App() {
 
                 <div className="shareholder-details">
                   <div className="input-group">
-                    <label htmlFor={`sharePercent-${index}`}>
-                      Share Percent
-                    </label>
+                    <label htmlFor={`share-${index}`}>Share</label>
                     <input
-                      id={`sharePercent-${index}`}
+                      id={`share-${index}`}
                       type="text"
-                      value={`${(shareHolder.shareRatio * 100).toFixed(2)}%`}
+                      value={`${(
+                        shareHolder.shareRatio * formData.currentValuation
+                      ).toFixed(0)} : ${(shareHolder.shareRatio * 100).toFixed(
+                        2
+                      )}%`}
                       disabled
                       readOnly
                     />

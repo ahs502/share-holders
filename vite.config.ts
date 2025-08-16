@@ -4,6 +4,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 /** @see https://vite.dev/config/ */
 export default defineConfig({
+  base: "/share-holders/",
   plugins: [
     react(),
     VitePWA({

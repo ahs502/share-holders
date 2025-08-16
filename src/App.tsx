@@ -160,9 +160,9 @@ export function App() {
             {formData.shareHolders.map((shareHolder, index) => (
               <div key={index} className="shareholder-item">
                 <div className="shareholder-header">
-                  <div className="name-input-group">
-                    <div className="input-group">
-                      <label htmlFor={`name-${index}`}>Name</label>
+                  <div className="input-group">
+                    <label htmlFor={`name-${index}`}>Name</label>
+                    <div className="input-with-button-group">
                       <input
                         id={`name-${index}`}
                         type="text"
@@ -179,23 +179,23 @@ export function App() {
                         disabled={disabled}
                         placeholder="Shareholder name"
                       />
+                      <button
+                        type="button"
+                        className="remove-button"
+                        onClick={() => {
+                          setFormData((current) => ({
+                            ...current,
+                            shareHolders: current.shareHolders.filter(
+                              (_, i) => i !== index
+                            ),
+                          }));
+                        }}
+                        disabled={disabled}
+                        title="Remove shareholder"
+                      >
+                        ×
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      className="remove-button"
-                      onClick={() => {
-                        setFormData((current) => ({
-                          ...current,
-                          shareHolders: current.shareHolders.filter(
-                            (_, i) => i !== index
-                          ),
-                        }));
-                      }}
-                      disabled={disabled}
-                      title="Remove shareholder"
-                    >
-                      ×
-                    </button>
                   </div>
                 </div>
 
@@ -213,9 +213,9 @@ export function App() {
                     />
                   </div>
 
-                  <div className="invest-group">
-                    <div className="input-group">
-                      <label htmlFor={`invest-${index}`}>Invest Amount</label>
+                  <div className="input-group">
+                    <label htmlFor={`invest-${index}`}>Invest Amount</label>
+                    <div className="input-with-button-group">
                       <input
                         id={`invest-${index}`}
                         type="number"
@@ -223,37 +223,38 @@ export function App() {
                         placeholder="0"
                         disabled={disabled}
                       />
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        disabled={disabled}
+                        onClick={() => {
+                          const investInput = document.getElementById(
+                            `invest-${index}`
+                          ) as HTMLInputElement;
+                          const investAmount =
+                            parseFloat(investInput.value) || 0;
+                          if (!investAmount) return;
+                          const newValuation =
+                            formData.currentValuation + investAmount;
+                          setFormData((current) => ({
+                            ...current,
+                            totalInvestment:
+                              current.totalInvestment + investAmount,
+                            currentValuation: newValuation,
+                            shareHolders: current.shareHolders.map((s, i) => ({
+                              ...s,
+                              shareRatio:
+                                (s.shareRatio * current.currentValuation +
+                                  (i === index ? investAmount : 0)) /
+                                newValuation,
+                            })),
+                          }));
+                          investInput.value = "";
+                        }}
+                      >
+                        Invest
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      className="secondary-button"
-                      disabled={disabled}
-                      onClick={() => {
-                        const investInput = document.getElementById(
-                          `invest-${index}`
-                        ) as HTMLInputElement;
-                        const investAmount = parseFloat(investInput.value) || 0;
-                        if (!investAmount) return;
-                        const newValuation =
-                          formData.currentValuation + investAmount;
-                        setFormData((current) => ({
-                          ...current,
-                          totalInvestment:
-                            current.totalInvestment + investAmount,
-                          currentValuation: newValuation,
-                          shareHolders: current.shareHolders.map((s, i) => ({
-                            ...s,
-                            shareRatio:
-                              (s.shareRatio * current.currentValuation +
-                                (i === index ? investAmount : 0)) /
-                              newValuation,
-                          })),
-                        }));
-                        investInput.value = "";
-                      }}
-                    >
-                      Invest
-                    </button>
                   </div>
                 </div>
               </div>
